@@ -1,0 +1,12 @@
+mutation SHIPPER_PROJECTION_PRODUCT_CREATE($products: [ProductInput]!) {
+  bulkUpsertProduct(input: { products: $products }) {
+    products {
+      id
+      species
+      variety
+      size
+      packType
+      plu
+    }
+  }
+}

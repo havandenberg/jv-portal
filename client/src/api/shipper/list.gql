@@ -1,0 +1,36 @@
+query SHIPPER_LIST(
+  $country: [String!]
+  $orderBy: [ShippersOrderBy!]
+  $search: [ShipperFilter!]
+) {
+  shippers(
+    filter: { and: $search, country: { id: { in: $country } } }
+    orderBy: $orderBy
+  ) {
+    nodes {
+      id
+      country {
+        countryName
+      }
+      groupId
+      personContactsByShipperPersonContactShipperIdAndPersonContactId {
+        nodes {
+          shippersByShipperPersonContactPersonContactIdAndShipperId {
+            nodes {
+              shipperName
+              id
+            }
+          }
+          email
+          firstName
+          id
+          isPrimary
+          lastName
+          workPhone
+        }
+      }
+      shipperName
+    }
+    totalCount
+  }
+}

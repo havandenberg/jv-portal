@@ -1,0 +1,7 @@
+mutation SHIPPER_PROJECTION_ENTRY_CREATE($entry: EntryInput!) {
+  createEntry(input: { entry: $entry }) {
+    entry {
+      id
+    }
+  }
+}

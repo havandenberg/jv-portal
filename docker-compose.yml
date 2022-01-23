@@ -2,15 +2,26 @@ version: '3'
 
 services:
   db:
-    container_name: 'jv-portal-db'
-    image: 'postgres:13'
+    container_name: jv-portal-db
+    image: postgres:13
     env_file:
       - ./.env
     ports:
-      - '5434:5432'
+      - 5434:5432
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-portal-data:/var/lib/postgresql/data
       - ${BACKUP_DIRECTORY}:/backups
+  db-admin:
+    container_name: jv-portal-dbadmin
+    image: taivokasper/omnidb
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    ports:
+      - 8082:8080
+    volumes:
+      - dbadmin-portal-data:/etc/omnidb
   db-backup:
     container_name: jv-portal-backup
     image: prodrigestivill/postgres-backup-local
@@ -20,37 +31,34 @@ services:
     env_file:
       - ./.env
     ports:
-      - '8081:8080'
+      - 8083:8080
     volumes:
       - ${BACKUP_DIRECTORY}:/backups
   graphql:
-    container_name: jv-graphql
+    container_name: jv-portal-graphql
     build: ./graphql
     depends_on:
       - db
     env_file:
       - ./.env
     ports:
-      - 5435:5433
+      - 5435:5435
     restart: always
   client:
-    container_name: 'jv-client'
+    container_name: jv-portal-client
     build: ./client
     depends_on:
       - db
       - graphql
-      - server
     env_file:
       - ./.env
     ports:
-      - '3000:3000'
+      - 3003:3000
     volumes:
       - ./client:/client
-      - client_nodemodules:/client/node_modules
+      - client-portal-nodemodules:/client/node_modules
 
 volumes:
-  db-data:
-  dbadmin-data:
-  worker_nodemodules:
-  client_nodemodules:
-  server_nodemodules:
+  db-portal-data:
+  dbadmin-portal-data:
+  client-portal-nodemodules:

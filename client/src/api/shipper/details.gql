@@ -1,0 +1,31 @@
+query SHIPPER_DETAILS($id: String!, $orderBy: [PersonContactsOrderBy!]) {
+  shipper(id: $id) {
+    country {
+      countryName
+    }
+    groupId
+    id
+    logoSrc
+    personContactsByShipperPersonContactShipperIdAndPersonContactId(
+      orderBy: $orderBy
+    ) {
+      nodes {
+        shippersByShipperPersonContactPersonContactIdAndShipperId {
+          nodes {
+            shipperName
+            id
+          }
+        }
+        email
+        firstName
+        id
+        isPrimary
+        lastName
+        workPhone
+      }
+    }
+    notes
+    shipperName
+    website
+  }
+}

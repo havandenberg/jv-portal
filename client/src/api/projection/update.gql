@@ -1,0 +1,21 @@
+mutation SHIPPER_PROJECTION_UPDATE(
+  $entries: [EntryInput]!
+  $products: [ProductInput]!
+  $vessels: [VesselInput]!
+) {
+  bulkUpsertEntry(input: { entries: $entries }) {
+    entries {
+      id
+    }
+  }
+  bulkUpsertProduct(input: { products: $products }) {
+    products {
+      id
+    }
+  }
+  bulkUpsertVessel(input: { vessels: $vessels }) {
+    vessels {
+      id
+    }
+  }
+}

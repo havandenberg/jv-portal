@@ -1,0 +1,7 @@
+mutation SHIPPER_PROJECTION_VESSEL_CREATE($vessel: VesselInput!) {
+  createVessel(input: { vessel: $vessel }) {
+    vessel {
+      id
+    }
+  }
+}

@@ -1,2 +1,2 @@
 CREATE SCHEMA directory;
-CREATE SCHEMA projections;
+CREATE SCHEMA projection;
